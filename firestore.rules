@@ -1,0 +1,67 @@
+rules_version = '2';
+
+// Estrutura:
+//   usuarios/{uid}                      perfil; metas/{metaId}
+//   convites/{codigo}                   { grupoId } — lido por id ao entrar no grupo
+//   grupos/{grupoId}                    nome, codigoConvite, membros[uid] (máx. 2)
+//     terceiros/{id}/reembolsos/{id}, cartoes, categorias, receitas,
+//     despesas/{id}/divisoes/{id}, orcamentos, notificacoes, logs
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function logado() {
+      return request.auth != null;
+    }
+
+    function grupo(grupoId) {
+      return /databases/$(database)/documents/grupos/$(grupoId);
+    }
+
+    // Leituras usam o estado atual; gravações usam o estado após a transação,
+    // para permitir criar o grupo (ou entrar nele) e gravar o log na mesma operação.
+    function membroParaLer(grupoId) {
+      return logado() && request.auth.uid in get(grupo(grupoId)).data.membros;
+    }
+
+    function membroParaGravar(grupoId) {
+      return logado() && request.auth.uid in getAfter(grupo(grupoId)).data.membros;
+    }
+
+    match /usuarios/{uid} {
+      allow read, create, update: if logado() && request.auth.uid == uid;
+
+      match /metas/{metaId} {
+        allow read, write: if logado() && request.auth.uid == uid;
+      }
+    }
+
+    match /convites/{codigo} {
+      allow get: if logado();
+      allow create: if logado()
+        && getAfter(grupo(request.resource.data.grupoId)).data.membros == [request.auth.uid];
+    }
+
+    match /grupos/{grupoId} {
+      // Leitura por id liberada para quem está logado: necessária para entrar pelo convite.
+      // Ids de grupo são aleatórios e a listagem da coleção continua bloqueada.
+      allow get: if logado();
+
+      allow create: if logado() && request.resource.data.membros == [request.auth.uid];
+
+      allow update: if (
+          membroParaLer(grupoId)
+          && request.resource.data.membros == resource.data.membros
+        ) || (
+          logado()
+          && !(request.auth.uid in resource.data.membros)
+          && resource.data.membros.size() < 2
+          && request.resource.data.membros == resource.data.membros.concat([request.auth.uid])
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['membros'])
+        );
+
+      match /{documento=**} {
+        allow read: if membroParaLer(grupoId);
+        allow write: if membroParaGravar(grupoId);
+      }
+    }
+  }
+}
