@@ -1,0 +1,33 @@
+/* Tokens visuais do protótipo no Figma (RNF009). */
+:root {
+  --cor-principal: #0F6E56;
+  --cor-principal-clara: #E1F5EE;
+  --cor-texto: #1F1F1D;
+  --cor-texto-secundario: #6B6A64;
+  --cor-borda: #E2E0D8;
+  --cor-fundo: #F7F6F2;
+  --cor-superficie: #FFFFFF;
+
+  --cor-alerta: #854F0B;
+  --cor-alerta-fundo: #FAEEDA;
+  --cor-perigo: #A32D2D;
+  --cor-perigo-fundo: #FCEBEB;
+  --cor-sucesso: #3B6D11;
+  --cor-sucesso-fundo: #EAF3DE;
+
+  --fonte: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --raio-cartao: 12px;
+  --raio-botao: 12px;
+  --raio-campo: 10px;
+
+  --espaco-1: 4px;
+  --espaco-2: 8px;
+  --espaco-3: 12px;
+  --espaco-4: 16px;
+  --espaco-5: 24px;
+  --espaco-6: 32px;
+
+  --altura-nav: 64px;
+  --largura-maxima: 560px;
+}

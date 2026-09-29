@@ -11,7 +11,17 @@ Equipe: Giovana Schmitt, Gustavo da Silva Cavalheiro Nogueira, Lucas Eduardo, Ta
 - Autenticação com conta Google
 - Geração de relatório em PDF
 - Leitura de cupom fiscal (QR Code) via serviço externo
-- Framework de front-end: **a definir pelo grupo**
+- Front-end: JavaScript puro com módulos ES e padrão MVC, sem build (Firebase via CDN em `src/lib/firebase.js`)
+
+## Arquitetura (MVC)
+
+Detalhes no README. Regras para código novo:
+
+- `models/` entidades com `validar()` retornando `[{ campo, mensagem }]`; `repositories/` um por coleção (estender `RepositorioDoGrupo` para dados do grupo, que já grava log RNF002); `services/` para operações que tocam várias coleções (usar `runTransaction` + `registrarLogEm`).
+- `views/` não importam repositórios nem services; expõem `aoXxx(handler)` e o controller liga os eventos. Montar HTML sempre com o tag `html` de `utils/html.js` (escapa valores).
+- `controllers/` montam a entidade a partir do formulário, chamam repositório/serviço e usam `tratarErro(erro, view)`.
+- Nova tela: criar controller + view e registrar a rota em `src/routes.js`. Referências: Categorias (CRUD) e Nova despesa (formulário com regras).
+- Valores em centavos (inteiro), datas ISO `AAAA-MM-DD`.
 
 ## Protótipo no Figma
 
