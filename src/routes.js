@@ -15,6 +15,7 @@ import { RelatorioController } from './controllers/RelatorioController.js';
 
 export const rotas = [
   { caminho: '/login', publica: true, acao: (c) => new AuthController(c).login() },
+  { caminho: '/cadastro', publica: true, acao: (c) => new AuthController(c).cadastro() },
   { caminho: '/grupo', semGrupo: true, acao: (c) => new GrupoController(c).configurar() },
 
   { caminho: '/', acao: (c) => new InicioController(c).index() },

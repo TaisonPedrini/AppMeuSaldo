@@ -9,7 +9,7 @@ Equipe: Giovana Schmitt, Gustavo da Silva Cavalheiro Nogueira, Lucas Eduardo e T
 O projeto usa JavaScript puro com módulos ES. O Firebase é carregado por CDN, então não há etapa de build nem `npm install`.
 
 1. Crie um projeto no [console do Firebase](https://console.firebase.google.com/). Nele:
-   - ative **Authentication → Google**;
+   - ative **Authentication → Sign-in method → Google** e **E-mail/senha**;
    - crie o banco **Firestore**;
    - registre um **app web**.
 2. Copie a configuração do app web para [src/config/firebase.config.js](src/config/firebase.config.js).
@@ -17,13 +17,14 @@ O projeto usa JavaScript puro com módulos ES. O Firebase é carregado por CDN, 
 4. Sirva a pasta por HTTP. Abrir o `index.html` direto do disco não funciona, porque os módulos ES exigem HTTP. Duas opções:
    - no VS Code, a extensão **Live Server** (botão "Go Live");
    - ou `python -m http.server 5500` na raiz do projeto.
-5. Em Authentication → Configurações → Domínios autorizados, confira se `localhost` está na lista.
+5. Em Authentication → Configurações → Domínios autorizados, confira se `localhost` está na lista. Se usar o Live Server, que abre em `127.0.0.1:5500`, adicione também `127.0.0.1`.
 
-### Autenticação desabilitada (desenvolvimento)
+### Modos de desenvolvimento
 
-Por enquanto, `AUTENTICACAO_HABILITADA = false` em [src/config/app.config.js](src/config/app.config.js). Com isso, o app entra direto com um usuário e um grupo fixos (`usuario-dev` / `grupo-dev`), sem as telas de login e de grupo.
+As flags ficam em [src/config/app.config.js](src/config/app.config.js):
 
-Como as regras de [firestore.rules](firestore.rules) exigem login, nessa fase o Firestore precisa estar em **modo de teste**. Ao ligar a autenticação, publique as regras de novo.
+- `AUTENTICACAO_HABILITADA = false`: o app entra direto com um usuário e um grupo fixos (`usuario-dev` / `grupo-dev`), sem as telas de login e de grupo. Como as regras de [firestore.rules](firestore.rules) exigem login, nesse modo o Firestore precisa estar em **modo de teste**.
+- `PERFIL_NO_FIRESTORE = false` (padrão atual, com a autenticação ligada): o login Google funciona, mas o perfil é montado só com os dados da conta Google, sem ler nem gravar `usuarios/{uid}`, e o usuário entra no grupo `grupo-dev`. Ligue a flag quando o Firestore estiver criado e as regras publicadas; a partir daí entram as telas de criar grupo e de entrar num grupo existente.
 
 ## Arquitetura MVC
 
@@ -69,7 +70,7 @@ Usuário → View (evento) → Controller → Model (entidade.validar)
 
 | Tela | Rota | Arquivos |
 |---|---|---|
-| Login (UC01) | `#/login` | AuthController, LoginView, AuthService |
+| Login e cadastro (UC01) | `#/login`, `#/cadastro` | AuthController, LoginView, CadastroView, AuthService, Credenciais |
 | Criar ou entrar no grupo (UC02) | `#/grupo` | GrupoController, GrupoConfigView, GrupoService |
 | Nova despesa (UC05, UC08, UC09, UC10) | `#/despesas/nova` | DespesaController, DespesaFormView, DespesaService |
 | Categorias (UC07) | `#/categorias` | CategoriaController, CategoriasView, CategoriaRepository |

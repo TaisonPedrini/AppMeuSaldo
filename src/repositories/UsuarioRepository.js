@@ -17,7 +17,7 @@ export class UsuarioRepository extends Repository {
 
       const usuario = new Usuario({
         id: contaGoogle.uid,
-        nome: contaGoogle.displayName ?? '',
+        nome: contaGoogle.displayName || (contaGoogle.email ?? '').split('@')[0],
         email: contaGoogle.email ?? '',
       });
       await setDoc(ref, { ...usuario.toFirestore(), criadoEm: serverTimestamp() });
