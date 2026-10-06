@@ -24,7 +24,8 @@ O projeto usa JavaScript puro com módulos ES. O Firebase é carregado por CDN, 
 As flags ficam em [src/config/app.config.js](src/config/app.config.js):
 
 - `AUTENTICACAO_HABILITADA = false`: o app entra direto com um usuário e um grupo fixos (`usuario-dev` / `grupo-dev`), sem as telas de login e de grupo. Como as regras de [firestore.rules](firestore.rules) exigem login, nesse modo o Firestore precisa estar em **modo de teste**.
-- `PERFIL_NO_FIRESTORE = false` (padrão atual, com a autenticação ligada): o login Google funciona, mas o perfil é montado só com os dados da conta Google, sem ler nem gravar `usuarios/{uid}`, e o usuário entra no grupo `grupo-dev`. Ligue a flag quando o Firestore estiver criado e as regras publicadas; a partir daí entram as telas de criar grupo e de entrar num grupo existente.
+- `PERFIL_NO_FIRESTORE = true` (padrão atual): o perfil é lido e gravado em `usuarios/{uid}`, e quem ainda não tem grupo passa pelas telas de criar grupo ou de entrar num grupo existente. Exige o Firestore criado e as regras publicadas.
+- `PERFIL_NO_FIRESTORE = false` (com a autenticação ligada): o login Google funciona, mas o perfil é montado só com os dados da conta Google, sem ler nem gravar `usuarios/{uid}`, e o usuário entra no grupo `grupo-dev`.
 
 ## Arquitetura MVC
 
