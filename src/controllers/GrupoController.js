@@ -1,6 +1,7 @@
 import { Controller } from '../core/Controller.js';
 import { Sessao } from '../core/Sessao.js';
 import { GrupoService } from '../services/GrupoService.js';
+import { AuthService } from '../services/AuthService.js';
 import { GrupoConfigView } from '../views/grupo/GrupoConfigView.js';
 import { GrupoGerenciarView } from '../views/grupo/GrupoGerenciarView.js';
 import { Toast } from '../views/components/Toast.js';
@@ -9,7 +10,9 @@ import { Toast } from '../views/components/Toast.js';
 export class GrupoController extends Controller {
   /** Primeiro acesso: usuário ainda sem grupo. */
   configurar() {
-    const view = new GrupoConfigView(this.conteudo).render({ nomeUsuario: this.usuario.nome });
+    const view = new GrupoConfigView(this.conteudo).render({ nomeUsuario: this.usuario.nome, emailUsuario: this.usuario.email });
+    // Quem entrou com a conta errada precisa poder sair: esta tela não tem a barra lateral.
+    view.aoSair(() => AuthService.sair());
 
     view.aoCriar(({ nome }) => this.executarNoGrupo(view, '[data-form="criar"] button', () => GrupoService.criar(nome, this.usuario)));
     view.aoEntrarComCodigo(({ codigo }) => this.executarNoGrupo(view, '[data-form="entrar"] button', () => GrupoService.entrar(codigo, this.usuario)));

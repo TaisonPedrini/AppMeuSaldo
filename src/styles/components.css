@@ -637,6 +637,21 @@ body:has(.acesso) {
   .vitrine-exemplo { background: #202221; -webkit-backdrop-filter: none; backdrop-filter: none; }
 }
 
+/* ---------- Primeiro acesso: criar ou entrar no grupo (UC02) ---------- */
+.grupo-escolha .divisor { margin: var(--espaco-5) 0; }
+.grupo-opcao-titulo { display: flex; align-items: flex-start; gap: var(--espaco-3); }
+.grupo-opcao-titulo h2 { margin: 0 0 2px; font-size: 1rem; }
+.grupo-opcao-titulo .legenda { margin: 0; }
+.grupo-passo {
+  display: grid; place-items: center; flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--cor-principal-clara); color: var(--cor-principal); font-size: 0.8125rem; font-weight: 700;
+}
+/* O código é curto e em maiúsculas: espaçado e em letras de largura fixa, para conferir com quem enviou. */
+.acesso .campo input.campo-codigo { text-transform: uppercase; letter-spacing: 0.3em; font-variant-numeric: tabular-nums; font-weight: 600; }
+.acesso .campo input.campo-codigo::placeholder { letter-spacing: 0.02em; font-weight: 400; text-transform: none; }
+.acesso-rodape strong { color: var(--cor-texto); font-weight: 600; }
+.acesso-rodape .botao-texto { padding: 0; font-size: inherit; }
+
 /* ---------- Seletor de mês "‹ Novembro de 2026 ›" ---------- */
 .seletor-mes {
   display: inline-flex; align-items: center; gap: var(--espaco-1);
