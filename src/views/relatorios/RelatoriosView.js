@@ -2,6 +2,7 @@ import { View } from '../../core/View.js';
 import { html, seguro } from '../../utils/html.js';
 import { formatarMoeda } from '../../utils/moeda.js';
 import { SecoesRelatorio } from '../../models/enums.js';
+import { ligarSeletorMes, seletorMes } from '../components/seletorMes.js';
 
 const OPCOES_PDF = [
   { valor: SecoesRelatorio.RESUMO, texto: 'Resumo (receitas, despesas e economia)' },
@@ -24,10 +25,7 @@ export class RelatoriosView extends View {
             <h1>Relatórios</h1>
             <p class="texto-secundario">Indicadores financeiros · <span data-mes></span></p>
           </div>
-          <div class="campo campo--compacto">
-            <label for="periodo">Mês</label>
-            <input id="periodo" name="periodo" type="month" value="${periodo}" required>
-          </div>
+          ${seletorMes(periodo)}
         </header>
 
         <div class="indicadores">
@@ -96,7 +94,7 @@ export class RelatoriosView extends View {
   }
 
   aoMudarPeriodo(handler) {
-    this.on('change', '#periodo', (_e, campo) => handler(campo.value));
+    ligarSeletorMes(this, handler);
   }
 
   aoGerarPdf(handler) {

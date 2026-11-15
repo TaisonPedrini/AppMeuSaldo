@@ -134,7 +134,9 @@ a.lista-item:hover { background: var(--cor-fundo); }
   }
   .lateral > .botao { margin: var(--espaco-4) 0 0; }
   .topo, .nav-inferior, .somente-celular { display: none; }
-  .conteudo { width: 100%; max-width: var(--largura-maxima-pc); margin: 0; padding: var(--espaco-6) 40px; }
+  /* Centralizado na área à direita da barra lateral: em telas largas (1920px) a sobra fica dividida
+     dos dois lados, em vez de virar uma faixa vazia à direita. */
+  .conteudo { width: 100%; max-width: var(--largura-maxima-pc); margin: 0 auto; padding: var(--espaco-6) 40px; }
   .conteudo--simples { max-width: none; }
 }
 
@@ -185,11 +187,13 @@ a.lista-item:hover { background: var(--cor-fundo); }
 /* .cartao.filtros: precisa vencer o display: block de .cartao, definido mais abaixo. */
 .cartao.filtros { display: grid; grid-template-columns: 1fr 1fr; gap: var(--espaco-3); align-items: end; }
 .filtros .campo label { font-size: 0.8125rem; color: var(--cor-texto-secundario); }
-.filtros-busca { grid-column: 1 / -1; }
+.filtros-busca, .filtros-mes { grid-column: 1 / -1; }
 .filtros-limpar { justify-self: start; min-height: 44px; }
+/* PC: 1ª linha busca + mês; 2ª linha os quatro filtros e "Limpar filtros". */
 @media (min-width: 1024px) {
-  .cartao.filtros { grid-template-columns: minmax(180px, 2fr) minmax(175px, 1.2fr) repeat(4, minmax(105px, 1fr)) auto; }
-  .filtros-busca { grid-column: auto; }
+  .cartao.filtros { grid-template-columns: repeat(4, minmax(0, 1fr)) auto; }
+  .filtros-busca { grid-column: span 3; }
+  .filtros-mes { grid-column: span 2; }
 }
 
 .paginacao { display: flex; align-items: center; justify-content: space-between; gap: var(--espaco-3); }
@@ -201,7 +205,6 @@ a.lista-item:hover { background: var(--cor-fundo); }
 .lista-item.lista-item--bloco { flex-direction: column; align-items: stretch; gap: var(--espaco-2); }
 .lista-item-linha { display: flex; align-items: center; justify-content: space-between; gap: var(--espaco-3); flex-wrap: wrap; }
 .etiqueta--atencao { background: var(--cor-alerta-fundo); color: var(--cor-alerta); }
-.campo--compacto input { min-width: 180px; }
 
 .segmentado--compacto { border: 0; margin: 0; padding: 0; max-width: 320px; }
 
@@ -450,6 +453,61 @@ body:has(.acesso) {
   .acesso .campo input:not([type="radio"]):not([type="checkbox"]) { border-color: var(--cor-texto-secundario); }
 }
 
+/* ---------- Seletor de mês "‹ Novembro de 2026 ›" ---------- */
+.seletor-mes {
+  display: inline-flex; align-items: center; gap: var(--espaco-1);
+  min-height: 44px; padding: 0 var(--espaco-1);
+  background: var(--cor-superficie); border: 1px solid var(--cor-borda); border-radius: var(--raio-campo);
+}
+.seletor-mes .botao-icone { color: var(--cor-principal); }
+.seletor-mes-rotulo { min-width: 9.5rem; text-align: center; font-weight: 600; font-size: 0.9375rem; }
+.campo-rotulo { font-size: 0.8125rem; font-weight: 500; color: var(--cor-texto-secundario); }
+.filtros .seletor-mes { display: flex; justify-content: space-between; }
+
+/* ---------- Acabamento: tipografia, números e pressão ---------- */
+/* Títulos grandes com tracking negativo; texto pequeno perto de zero. */
+.pagina-cabecalho h1 { letter-spacing: -0.02em; }
+.cartao-destaque strong, .indicador-valor { letter-spacing: -0.015em; }
+@media (min-width: 1024px) {
+  .pagina-cabecalho h1 { font-size: 1.75rem; }
+}
+
+/* Valores em reais com algarismos de largura fixa: colunas de dinheiro alinham e não "pulam" ao mudar. */
+.indicador-valor, .lista-item-lado, .composicao dd, .grafico-valor, .valor-positivo, .valor-negativo,
+.cartao-destaque strong, .seletor-mes-rotulo { font-variant-numeric: tabular-nums; }
+
+/* Feedback no momento do toque (pointer-down), não na liberação. */
+.cartao-destaque, .cartao-alerta, a.cartao-alerta--neutro, .nav-item--destaque, .botao-icone, .lateral-item {
+  transition: transform var(--duracao-pressao) var(--ease-out), background-color 150ms ease-out;
+  -webkit-tap-highlight-color: transparent;
+}
+.cartao-destaque:active, .cartao-alerta:active, a.cartao-alerta--neutro:active { transform: scale(0.985); }
+.nav-item--destaque:active, .botao-icone:active { transform: scale(0.94); }
+
+/* Campos que aparecem conforme a escolha (cartão, terceiro, recorrência) surgem em vez de "teleportar". */
+[data-secao] { transition: opacity 200ms var(--ease-out), translate 200ms var(--ease-out); }
+@starting-style {
+  [data-secao] { opacity: 0; translate: 0 -4px; }
+}
+
+/* No celular, cabeçalho e navegação são um material translúcido: o conteúdo passa por baixo. */
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .topo, .nav-inferior {
+    background: rgba(255, 255, 255, 0.82);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(180%);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .topo, .nav-inferior { background: var(--cor-superficie); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cartao-destaque:active, .cartao-alerta:active, a.cartao-alerta--neutro:active,
+  .nav-item--destaque:active, .botao-icone:active { transform: none; }
+  [data-secao] { transition: opacity 150ms ease; translate: none; }
+}
+
 /* ---------- Avisos ---------- */
 .toasts {
   position: fixed; left: var(--espaco-4); right: var(--espaco-4); z-index: 20;
@@ -458,7 +516,20 @@ body:has(.acesso) {
   max-width: var(--largura-maxima); margin: 0 auto;
   pointer-events: none;
 }
-.toast { padding: var(--espaco-3) var(--espaco-4); border-radius: var(--raio-cartao); font-weight: 500; }
+.toast {
+  padding: var(--espaco-3) var(--espaco-4); border-radius: var(--raio-cartao); font-weight: 500;
+  box-shadow: 0 1px 2px rgba(31, 31, 29, 0.06), 0 8px 24px rgba(31, 31, 29, 0.08);
+  /* Entra e sai pela mesma borda (a de baixo), como uma folha que sobe e desce. */
+  transition: opacity var(--duracao-aviso) var(--ease-out), transform var(--duracao-aviso) var(--ease-out);
+}
+@starting-style {
+  .toast { opacity: 0; transform: translateY(12px) scale(0.98); }
+}
+.toast--saindo { opacity: 0; transform: translateY(12px) scale(0.98); transition-duration: 200ms; }
+@media (prefers-reduced-motion: reduce) {
+  .toast, .toast--saindo { transform: none; transition: opacity 200ms ease; }
+  @starting-style { .toast { transform: none; } }
+}
 .toast--sucesso { background: var(--cor-sucesso-fundo); color: var(--cor-sucesso); }
 .toast--aviso { background: var(--cor-alerta-fundo); color: var(--cor-alerta); }
 .toast--erro { background: var(--cor-perigo-fundo); color: var(--cor-perigo); }

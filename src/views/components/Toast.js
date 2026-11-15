@@ -9,7 +9,14 @@ function mostrar(mensagem, tipo) {
   aviso.setAttribute('role', tipo === 'erro' ? 'alert' : 'status');
   aviso.textContent = mensagem;
   area.append(aviso);
-  setTimeout(() => aviso.remove(), DURACAO_MS);
+  setTimeout(() => sair(aviso), DURACAO_MS);
+}
+
+/** Sai pela mesma borda em que entrou (classe toast--saindo) e só então deixa a página. */
+function sair(aviso) {
+  aviso.classList.add('toast--saindo');
+  aviso.addEventListener('transitionend', () => aviso.remove(), { once: true });
+  setTimeout(() => aviso.remove(), 400); // garantia, caso a transição não dispare (ex.: aba em segundo plano)
 }
 
 export const Toast = {

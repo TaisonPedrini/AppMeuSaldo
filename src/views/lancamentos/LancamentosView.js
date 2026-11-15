@@ -4,6 +4,7 @@ import { formatarMoeda } from '../../utils/moeda.js';
 import { formatarData } from '../../utils/data.js';
 import { FormaPagamento, Rotulos, TipoCategoria } from '../../models/enums.js';
 import { valorComSinal } from '../components/indicadores.js';
+import { ligarSeletorMes, seletorMes } from '../components/seletorMes.js';
 
 const opcao = (valor, texto) => html`<option value="${valor}">${texto}</option>`;
 
@@ -28,9 +29,9 @@ export class LancamentosView extends View {
             <label for="busca">Buscar</label>
             <input id="busca" name="busca" type="search" placeholder="Buscar por descrição" autocomplete="off">
           </div>
-          <div class="campo">
-            <label for="periodo">Mês</label>
-            <input id="periodo" name="periodo" type="month" value="${periodo}" required>
+          <div class="campo filtros-mes">
+            <span class="campo-rotulo">Mês</span>
+            ${seletorMes(periodo)}
           </div>
           <div class="campo">
             <label for="usuarioId">Pessoa</label>
@@ -76,12 +77,6 @@ export class LancamentosView extends View {
       </section>`;
   }
 
-  render(dados) {
-    super.render(dados);
-    this.periodoInicial = dados.periodo;
-    return this;
-  }
-
   carregando(ativo) {
     this.$('[data-lista]').setAttribute('aria-busy', String(ativo));
     if (ativo) this.$('[data-resumo]').textContent = 'Carregando…';
@@ -125,12 +120,10 @@ export class LancamentosView extends View {
       espera = setTimeout(enviar, 250);
     });
     this.on('submit', '[data-form="filtros"]', (e) => e.preventDefault());
-    // O reset limpa os campos, mas mantém o mês em exibição; o evento dispara antes da limpeza.
-    this.on('reset', '[data-form="filtros"]', () => setTimeout(() => {
-      form().periodo.value = this.periodoAtual ?? this.periodoInicial;
-      enviar();
-    }));
-    this.on('change', '#periodo', (_e, campo) => { if (campo.value) this.periodoAtual = campo.value; });
+    // O reset limpa os filtros; o mês fica num campo oculto, que o reset não altera.
+    // O evento dispara antes da limpeza, por isso a leitura vai para o próximo ciclo.
+    this.on('reset', '[data-form="filtros"]', () => setTimeout(enviar));
+    ligarSeletorMes(this, enviar);
   }
 
   aoPaginar(handler) {

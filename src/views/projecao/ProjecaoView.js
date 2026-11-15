@@ -3,6 +3,7 @@ import { html } from '../../utils/html.js';
 import { formatarMoeda } from '../../utils/moeda.js';
 import { formatarData } from '../../utils/data.js';
 import { valorComSinal } from '../components/indicadores.js';
+import { ligarSeletorMes, seletorMes } from '../components/seletorMes.js';
 
 /** Saldo projetado para o fim do mês e como ele é composto (UC15). */
 export class ProjecaoView extends View {
@@ -14,10 +15,7 @@ export class ProjecaoView extends View {
             <h1>Projeção do mês</h1>
             <p class="texto-secundario" data-mes></p>
           </div>
-          <div class="campo campo--compacto">
-            <label for="periodo">Mês</label>
-            <input id="periodo" name="periodo" type="month" value="${periodo}" required>
-          </div>
+          ${seletorMes(periodo)}
         </header>
 
         <div class="pagina-dupla pagina-dupla--larga">
@@ -74,6 +72,6 @@ export class ProjecaoView extends View {
   }
 
   aoMudarPeriodo(handler) {
-    this.on('change', '#periodo', (_e, campo) => handler(campo.value));
+    ligarSeletorMes(this, handler);
   }
 }

@@ -3,6 +3,7 @@ import { html } from '../../utils/html.js';
 import { formatarMoeda } from '../../utils/moeda.js';
 import { campoMoeda, selecao, legendaObrigatorios } from '../components/campos.js';
 import { barraProgresso } from '../components/indicadores.js';
+import { ligarSeletorMes, seletorMes } from '../components/seletorMes.js';
 
 const SITUACOES = {
   OK: { texto: 'Dentro do limite', classe: 'etiqueta--quitado' },
@@ -20,10 +21,7 @@ export class OrcamentoView extends View {
             <h1>Orçamento</h1>
             <p class="texto-secundario">Limites por categoria · <span data-mes></span></p>
           </div>
-          <div class="campo campo--compacto">
-            <label for="periodo">Mês</label>
-            <input id="periodo" name="periodo" type="month" value="${periodo}" required>
-          </div>
+          ${seletorMes(periodo)}
         </header>
 
         <div class="indicadores">
@@ -105,7 +103,7 @@ export class OrcamentoView extends View {
   }
 
   aoMudarPeriodo(handler) {
-    this.on('change', '#periodo', (_e, campo) => handler(campo.value));
+    ligarSeletorMes(this, handler);
   }
 
   aoDefinir(handler) {

@@ -38,5 +38,10 @@
 
   /* Versão PC (≥ 1024px), conforme as telas 1440 × 900 do Figma. */
   --largura-lateral: 248px;
-  --largura-maxima-pc: 1120px;
+  --largura-maxima-pc: 1280px;
+
+  /* Movimento: saída rápida e assentamento suave, sem ricochete (amortecimento crítico). */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --duracao-pressao: 160ms;
+  --duracao-aviso: 320ms;
 }

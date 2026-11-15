@@ -34,6 +34,19 @@ export function nomeDoMes(periodo) {
   return `${MESES[mes - 1]} de ${ano}`;
 }
 
+/** "2026-11" + 1 → "2026-12"; "2026-01" − 1 → "2025-12". */
+export function somarMeses(periodo, quantidade) {
+  const [ano, mes] = periodo.split('-').map(Number);
+  const total = ano * 12 + (mes - 1) + quantidade;
+  return `${Math.floor(total / 12)}-${String((total % 12) + 1).padStart(2, '0')}`;
+}
+
+/** "2026-11" → "Novembro de 2026" (para títulos e seletores). */
+export function nomeDoMesTitulo(periodo) {
+  const nome = nomeDoMes(periodo);
+  return nome.charAt(0).toUpperCase() + nome.slice(1);
+}
+
 /**
  * Primeiro e último dia possíveis do mês, para consultas por faixa de data ISO.
  * "-31" funciona para qualquer mês porque a comparação é de texto.
