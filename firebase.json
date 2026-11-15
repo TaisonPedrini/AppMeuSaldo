@@ -12,6 +12,11 @@
       "README.md",
       "CLAUDE.md",
       "**/.*",
+      "**/.*/**",
+      ".git/**",
+      ".claude/**",
+      ".firebase/**",
+      "package.json",
       "**/node_modules/**"
     ],
     "rewrites": [{ "source": "**", "destination": "/index.html" }]
