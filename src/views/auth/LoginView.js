@@ -1,6 +1,6 @@
 import { html, seguro } from '../../utils/html.js';
 import { campo } from '../components/campos.js';
-import { AuthView, cabecalhoAcesso, campoSenha } from './AuthView.js';
+import { AuthView, cabecalhoAcesso, campoSenha, telaAcesso } from './AuthView.js';
 
 /** Logotipo "G" do Google, nas cores oficiais. */
 export const ICONE_GOOGLE = seguro(`
@@ -14,8 +14,7 @@ export const ICONE_GOOGLE = seguro(`
 /** UC01: entrar com e-mail e senha ou com a conta Google. */
 export class LoginView extends AuthView {
   template() {
-    return html`
-      <section class="acesso">
+    return telaAcesso(html`
         ${cabecalhoAcesso()}
 
         <div class="acesso-cartao">
@@ -34,8 +33,7 @@ export class LoginView extends AuthView {
           </form>
         </div>
 
-        <p class="acesso-rodape">Não tem conta? <a class="link-acao" href="#/cadastro">Criar conta</a></p>
-      </section>`;
+        <p class="acesso-rodape">Não tem conta? <a class="link-acao" href="#/cadastro">Criar conta</a></p>`);
   }
 
   aoEntrar(handler) {

@@ -1,13 +1,12 @@
 import { html } from '../../utils/html.js';
 import { campo, legendaObrigatorios } from '../components/campos.js';
 import { TAMANHO_MINIMO_SENHA } from '../../models/Credenciais.js';
-import { AuthView, cabecalhoAcesso, campoSenha } from './AuthView.js';
+import { AuthView, cabecalhoAcesso, campoSenha, telaAcesso } from './AuthView.js';
 
 /** UC01: criar conta com nome, e-mail e senha. */
 export class CadastroView extends AuthView {
   template() {
-    return html`
-      <section class="acesso">
+    return telaAcesso(html`
         ${cabecalhoAcesso('Crie sua conta para começar.')}
 
         <form class="acesso-cartao formulario" data-form="cadastro" novalidate>
@@ -19,8 +18,7 @@ export class CadastroView extends AuthView {
           <button type="submit" class="botao botao--primario botao--bloco">Criar conta</button>
         </form>
 
-        <p class="acesso-rodape">Já tem conta? <a class="link-acao" href="#/login">Entrar</a></p>
-      </section>`;
+        <p class="acesso-rodape">Já tem conta? <a class="link-acao" href="#/login">Entrar</a></p>`);
   }
 
   aoCadastrar(handler) {

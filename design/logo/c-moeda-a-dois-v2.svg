@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <title>MeuSaldo — conceito C: moeda a dois</title>
+  <!-- Uma moeda dividida em duas metades que deslizam, como uma balança se acertando. -->
+  <g fill="#000">
+    <path d="M120 26.4 A90 90 0 0 0 120 205.6 Z"/>
+    <path d="M136 50.4 A90 90 0 0 1 136 229.6 Z"/>
+  </g>
+</svg>

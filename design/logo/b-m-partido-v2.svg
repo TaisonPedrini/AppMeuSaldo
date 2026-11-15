@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <title>MeuSaldo — conceito B: M partido ao meio</title>
+  <!-- Um M cortado ao meio em duas metades espelhadas: um cartão, duas pessoas. -->
+  <g fill="#000" stroke="#000" stroke-width="10" stroke-linejoin="round">
+    <path d="M37 203 V53 H79 L116 109 V167 L79 111 V203 Z"/>
+    <path d="M219 203 V53 H177 L140 109 V167 L177 111 V203 Z"/>
+  </g>
+</svg>

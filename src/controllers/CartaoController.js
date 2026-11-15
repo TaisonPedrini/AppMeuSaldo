@@ -1,6 +1,8 @@
 import { Controller } from '../core/Controller.js';
+import { ErroValidacao } from '../core/erros.js';
 import { Cartao } from '../models/Cartao.js';
 import { FormaPagamento } from '../models/enums.js';
+import { bancoPorId } from '../models/bancos.js';
 import { CartaoRepository } from '../repositories/CartaoRepository.js';
 import { DespesaRepository } from '../repositories/DespesaRepository.js';
 import { CartoesView } from '../views/cartoes/CartoesView.js';
@@ -42,9 +44,13 @@ export class CartaoController extends Controller {
     this.view.limparErros();
     this.view.ocupado(true);
     try {
+      if (!dados.banco) throw new ErroValidacao([{ campo: 'banco', mensagem: 'Escolha o banco do cartão (ou "Outro").' }]);
+      const banco = bancoPorId(dados.banco);
       await this.repositorio.criar(new Cartao({
         nome: dados.nome?.trim(),
-        bandeira: dados.bandeira?.trim(),
+        // Banco da lista: o nome vem dela. "Outro": o nome digitado no campo que aparece.
+        bandeira: banco ? banco.nome : dados.bandeira?.trim(),
+        banco: banco ? banco.id : null,
         limite: paraCentavos(dados.limite),
       }));
       Toast.sucesso('Cartão adicionado.');

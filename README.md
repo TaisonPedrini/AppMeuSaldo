@@ -71,7 +71,7 @@ Usuário → View (evento) → Controller → Model (entidade.validar)
 
 | Tela | Rota | Arquivos |
 |---|---|---|
-| Login e cadastro (UC01) | `#/login`, `#/cadastro` | AuthController, LoginView, CadastroView, AuthService, Credenciais |
+| Login e cadastro (UC01) | `#/login`, `#/cadastro` | AuthController, LoginView, CadastroView, AuthService, Credenciais; no PC, a vitrine animada de [vitrine.js](src/views/components/vitrine.js) |
 | Criar ou entrar no grupo (UC02) | `#/grupo` | GrupoController, GrupoConfigView, GrupoService |
 | Nova despesa (UC05, UC08, UC09, UC10) | `#/despesas/nova` | DespesaController, DespesaFormView, DespesaService |
 | Categorias (UC07) | `#/categorias` | CategoriaController, CategoriasView, CategoriaRepository |

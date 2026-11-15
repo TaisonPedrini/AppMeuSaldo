@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <title>MeuSaldo — conceito A: S de duas metades</title>
+  <!-- Duas peças idênticas, uma girada 180° em relação à outra, formam o S de Saldo; a fenda no centro separa as metades. -->
+  <rect x="48" y="24" width="160" height="208" fill="none"/>
+  <g fill="none" stroke="#000" stroke-width="32">
+    <path d="M167.5 71.6 A42 42 0 1 0 122 127.6"/>
+    <path d="M88.5 184.4 A42 42 0 1 0 134 128.4"/>
+  </g>
+</svg>

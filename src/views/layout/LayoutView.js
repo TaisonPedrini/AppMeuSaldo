@@ -3,6 +3,7 @@
 // com todas as seções, como nas telas "versão PC" do Figma.
 import { html, seguro } from '../../utils/html.js';
 import { iniciais } from '../../utils/texto.js';
+import { logoIcone } from '../components/logo.js';
 
 const ICONES = {
   inicio: '<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
@@ -90,7 +91,7 @@ export class LayoutView {
       <div class="app-shell">
         <aside class="lateral" aria-label="Menu">
           <a class="lateral-marca" href="#/">
-            <span class="lateral-logo" aria-hidden="true">R$</span>
+            ${logoIcone(32)}
             <span>MeuSaldo</span>
           </a>
           <a class="botao botao--primario botao--bloco" href="#/despesas/nova">+ Nova despesa</a>
@@ -119,7 +120,7 @@ export class LayoutView {
         </aside>
 
         <header class="topo">
-          <a class="marca" href="#/">MeuSaldo</a>
+          <a class="marca" href="#/">${logoIcone(26)}<span>MeuSaldo</span></a>
           ${this.aoSair ? html`<button type="button" class="botao-texto" data-acao="sair">Sair</button>` : ''}
         </header>
 

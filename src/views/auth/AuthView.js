@@ -1,6 +1,8 @@
 import { View } from '../../core/View.js';
 import { html, seguro } from '../../utils/html.js';
 import { rotulo } from '../components/campos.js';
+import { logoIcone } from '../components/logo.js';
+import { ligarVitrine, vitrine } from '../components/vitrine.js';
 
 const ICONE_OLHO = seguro(`
   <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8"
@@ -10,13 +12,30 @@ const ICONE_OLHO = seguro(`
     <path class="olho-fechado" d="M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4M6.6 6.6C3.7 8.4 2 12 2 12s3.6 7 10 7a9.7 9.7 0 0 0 5.4-1.6M9.9 9.9a3 3 0 0 0 4.2 4.2"/>
   </svg>`);
 
-/** Cabeçalho comum das telas de acesso: marca e subtítulo opcional. */
-export function cabecalhoAcesso(subtitulo = '') {
+/** Cabeçalho comum das telas de acesso: marca e subtítulo. */
+export function cabecalhoAcesso(subtitulo = 'As finanças do casal organizadas em um só lugar.') {
   return html`
     <header class="acesso-cabecalho">
+      ${logoIcone(56)}
       <h1 class="acesso-titulo">MeuSaldo</h1>
       ${subtitulo ? html`<p class="acesso-subtitulo">${subtitulo}</p>` : ''}
     </header>`;
+}
+
+/**
+ * Moldura das telas de acesso: no PC, vitrine dos recursos à esquerda e o formulário à direita;
+ * no celular, só o formulário.
+ * @param conteudo html`` com o cabeçalho, o formulário e o rodapé da tela
+ */
+export function telaAcesso(conteudo) {
+  return html`
+    <div class="acesso-tela">
+      ${vitrine()}
+      <div class="acesso-painel">
+        <section class="acesso">${conteudo}</section>
+        <p class="acesso-seguranca">Conexão segura via HTTPS</p>
+      </div>
+    </div>`;
 }
 
 /** Campo de senha com botão para mostrar ou ocultar o que foi digitado. */
@@ -50,6 +69,8 @@ export class AuthView extends View {
     });
 
     this.on('input', '[aria-invalid="true"]', (_e, input) => this.limparErroDo(input));
+
+    ligarVitrine(this);
   }
 
   limparErroDo(input) {

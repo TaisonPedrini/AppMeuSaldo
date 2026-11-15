@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1600" height="810" viewBox="0 0 1600 810"><defs><filter id="grey"><feColorMatrix type="saturate" values="0"/></filter></defs><rect width="1600" height="810" fill="#f7f7f4"/><text x="60" y="78" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="40" font-weight="700" fill="#161616">MeuSaldo - conceitos de logo (v1)</text><text x="60" y="116" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="20" fill="#6b6b6b">Concepts for review — pick a direction (or tell me what you like in each).</text><rect x="60" y="150" width="474.667" height="600" rx="18" fill="#fff" stroke="#e4e4e0" stroke-width="1"/><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="90" y="190" width="414.667" height="300" preserveAspectRatio="xMidYMid meet">
+  <title>MeuSaldo — conceito A: S de duas metades</title>
+  <!-- Duas peças idênticas, uma girada 180° em relação à outra, formam o S de Saldo. -->
+  <g fill="none" stroke="#000" stroke-width="40" stroke-linecap="round">
+    <path d="M172.3 64.6 A46 46 0 1 0 122 124"/>
+    <path d="M83.7 191.4 A46 46 0 1 0 134 132"/>
+  </g>
+</svg>
+</g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="90" y="516" width="64" height="64" preserveAspectRatio="xMidYMid meet">
+  <title>MeuSaldo — conceito A: S de duas metades</title>
+  <!-- Duas peças idênticas, uma girada 180° em relação à outra, formam o S de Saldo. -->
+  <g fill="none" stroke="#000" stroke-width="40" stroke-linecap="round">
+    <path d="M172.3 64.6 A46 46 0 1 0 122 124"/>
+    <path d="M83.7 191.4 A46 46 0 1 0 134 132"/>
+  </g>
+</svg>
+</g><text x="122" y="600" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">64px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="180" y="548" width="32" height="32" preserveAspectRatio="xMidYMid meet">
+  <title>MeuSaldo — conceito A: S de duas metades</title>
+  <!-- Duas peças idênticas, uma girada 180° em relação à outra, formam o S de Saldo. -->
+  <g fill="none" stroke="#000" stroke-width="40" stroke-linecap="round">
+    <path d="M172.3 64.6 A46 46 0 1 0 122 124"/>
+    <path d="M83.7 191.4 A46 46 0 1 0 134 132"/>
+  </g>
+</svg>
+</g><text x="196" y="600" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">32px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="238" y="564" width="16" height="16" preserveAspectRatio="xMidYMid meet">
+  <title>MeuSaldo — conceito A: S de duas metades</title>
+  <!-- Duas peças idênticas, uma girada 180° em relação à outra, formam o S de Saldo. -->
+  <g fill="none" stroke="#000" stroke-width="40" stroke-linecap="round">
+    <path d="M172.3 64.6 A46 46 0 1 0 122 124"/>
+    <path d="M83.7 191.4 A46 46 0 1 0 134 132"/>
+  </g>
+</svg>
+</g><text x="246" y="600" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">16px</text><text x="90.0" y="636" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#161616">A · S de duas metades</text><text x="90.0" y="670" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">Duas pecas iguais formam o S de Saldo.</text><rect x="562.667" y="150" width="474.667" height="600" rx="18" fill="#fff" stroke="#e4e4e0" stroke-width="1"/><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="592.667" y="190" width="414.667" height="300" preserveAspectRatio="xMidYMid meet">
+  <title>MeuSaldo — conceito B: M partido ao meio</title>
+  <!-- Um M cortado ao meio em duas metades espelhadas: um cartão, duas pessoas. -->
+  <g fill="#000" stroke="#000" stroke-width="10" stroke-linejoin="round">
+    <path d="M37 203 V53 H79 L119 113 V171 L79 111 V203 Z"/>
+    <path d="M219 203 V53 H177 L137 113 V171 L177 111 V203 Z"/>
+  </g>
+</svg>
+</g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="592.667" y="516" width="64" height="64" preserveAspectRatio="xMidYMid meet">
+  <title>MeuSaldo — conceito B: M partido ao meio</title>
+  <!-- Um M cortado ao meio em duas metades espelhadas: um cartão, duas pessoas. -->
+  <g fill="#000" stroke="#000" stroke-width="10" stroke-linejoin="round">
+    <path d="M37 203 V53 H79 L119 113 V171 L79 111 V203 Z"/>
+    <path d="M219 203 V53 H177 L137 113 V171 L177 111 V203 Z"/>
+  </g>
+</svg>
+</g><text x="624.667" y="600" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">64px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="682.667" y="548" width="32" height="32" preserveAspectRatio="xMidYMid meet">
+  <title>MeuSaldo — conceito B: M partido ao meio</title>
+  <!-- Um M cortado ao meio em duas metades espelhadas: um cartão, duas pessoas. -->
+  <g fill="#000" stroke="#000" stroke-width="10" stroke-linejoin="round">
+    <path d="M37 203 V53 H79 L119 113 V171 L79 111 V203 Z"/>
+    <path d="M219 203 V53 H177 L137 113 V171 L177 111 V203 Z"/>
+  </g>
+</svg>
+</g><text x="698.667" y="600" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">32px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="740.667" y="564" width="16" height="16" preserveAspectRatio="xMidYMid meet">
+  <title>MeuSaldo — conceito B: M partido ao meio</title>
+  <!-- Um M cortado ao meio em duas metades espelhadas: um cartão, duas pessoas. -->
+  <g fill="#000" stroke="#000" stroke-width="10" stroke-linejoin="round">
+    <path d="M37 203 V53 H79 L119 113 V171 L79 111 V203 Z"/>
+    <path d="M219 203 V53 H177 L137 113 V171 L177 111 V203 Z"/>
+  </g>
+</svg>
+</g><text x="748.667" y="600" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">16px</text><text x="592.6666666666667" y="636" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#161616">B · M partido</text><text x="592.6666666666667" y="670" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">Um M cortado ao meio: um cartao, duas</text><text x="592.6666666666667" y="696" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">pessoas.</text><rect x="1065.33" y="150" width="474.667" height="600" rx="18" fill="#fff" stroke="#e4e4e0" stroke-width="1"/><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1095.33" y="190" width="414.667" height="300" preserveAspectRatio="xMidYMid meet">
+  <title>MeuSaldo — conceito C: moeda a dois</title>
+  <!-- Uma moeda dividida em duas metades que deslizam, como uma balança se acertando. -->
+  <g fill="#000">
+    <path d="M120 26.4 A90 90 0 0 0 120 205.6 Z"/>
+    <path d="M136 50.4 A90 90 0 0 1 136 229.6 Z"/>
+  </g>
+</svg>
+</g><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1095.33" y="516" width="64" height="64" preserveAspectRatio="xMidYMid meet">
+  <title>MeuSaldo — conceito C: moeda a dois</title>
+  <!-- Uma moeda dividida em duas metades que deslizam, como uma balança se acertando. -->
+  <g fill="#000">
+    <path d="M120 26.4 A90 90 0 0 0 120 205.6 Z"/>
+    <path d="M136 50.4 A90 90 0 0 1 136 229.6 Z"/>
+  </g>
+</svg>
+</g><text x="1127.33" y="600" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">64px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1185.33" y="548" width="32" height="32" preserveAspectRatio="xMidYMid meet">
+  <title>MeuSaldo — conceito C: moeda a dois</title>
+  <!-- Uma moeda dividida em duas metades que deslizam, como uma balança se acertando. -->
+  <g fill="#000">
+    <path d="M120 26.4 A90 90 0 0 0 120 205.6 Z"/>
+    <path d="M136 50.4 A90 90 0 0 1 136 229.6 Z"/>
+  </g>
+</svg>
+</g><text x="1201.33" y="600" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">32px</text><g filter="url(#grey)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" x="1243.33" y="564" width="16" height="16" preserveAspectRatio="xMidYMid meet">
+  <title>MeuSaldo — conceito C: moeda a dois</title>
+  <!-- Uma moeda dividida em duas metades que deslizam, como uma balança se acertando. -->
+  <g fill="#000">
+    <path d="M120 26.4 A90 90 0 0 0 120 205.6 Z"/>
+    <path d="M136 50.4 A90 90 0 0 1 136 229.6 Z"/>
+  </g>
+</svg>
+</g><text x="1251.33" y="600" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#8a8a8a" text-anchor="middle">16px</text><text x="1095.3333333333335" y="636" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="26" font-weight="700" fill="#161616">C · Moeda a dois</text><text x="1095.3333333333335" y="670" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" fill="#555">Uma moeda em duas metades que se acertam.</text></svg>

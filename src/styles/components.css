@@ -81,10 +81,6 @@ a.lista-item:hover { background: var(--cor-fundo); }
 .lateral { display: none; }
 
 .lateral-marca { display: flex; align-items: center; gap: 10px; padding: 0 var(--espaco-2); font-size: 1.0625rem; font-weight: 700; color: var(--cor-texto); text-decoration: none; }
-.lateral-logo {
-  display: grid; place-items: center; width: 32px; height: 32px; border-radius: 8px;
-  background: var(--cor-principal); color: #FFFFFF; font-size: 0.8125rem; font-weight: 700;
-}
 .lateral-secao {
   margin: var(--espaco-4) 0 var(--espaco-1); padding: 0 var(--espaco-3);
   font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
@@ -178,7 +174,34 @@ a.lista-item:hover { background: var(--cor-fundo); }
 
 /* ---------- Cartões de crédito (UC06) ---------- */
 .cartoes-grade { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--espaco-3); }
-.cartao-credito { display: flex; flex-direction: column; gap: var(--espaco-1); border-top: 4px solid var(--cor-pessoa-2); }
+.cartao-credito { display: flex; flex-direction: column; gap: var(--espaco-1); border-top: 4px solid var(--cor-borda); }
+
+/* Selo do banco: sigla na cor da marca (sem logotipos oficiais). */
+.banco-selo {
+  display: grid; place-items: center; flex-shrink: 0; width: 40px; height: 40px; border-radius: 10px;
+  background: var(--cor-fundo); color: var(--cor-texto-secundario);
+  font-size: 0.8125rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1;
+}
+.banco-selo--outro { background: var(--cor-superficie); border: 1px dashed var(--cor-borda); font-size: 1.125rem; font-weight: 500; }
+
+/* Escolha do banco: grade de opções com o selo e o nome; a marcada ganha contorno verde. */
+.bancos-grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: var(--espaco-2); margin-top: var(--espaco-1); }
+.banco-opcao {
+  position: relative; display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: var(--espaco-2) var(--espaco-1); border: 1px solid var(--cor-borda); border-radius: var(--raio-campo);
+  background: var(--cor-superficie); cursor: pointer; text-align: center;
+  transition: border-color 150ms ease-out, background-color 150ms ease-out, transform var(--duracao-pressao) var(--ease-out);
+}
+/* .campo .banco-opcao: a regra ".campo label" zera o padding e venceria um seletor de uma classe só. */
+.campo .banco-opcao { padding: 10px var(--espaco-1); }
+.banco-opcao:hover { border-color: var(--cor-texto-secundario); }
+.banco-opcao:active { transform: scale(0.97); }
+.banco-opcao input { position: absolute; opacity: 0; pointer-events: none; }
+.banco-opcao .banco-selo { width: 32px; height: 32px; border-radius: 8px; font-size: 0.6875rem; }
+.banco-nome { font-size: 0.75rem; font-weight: 500; line-height: 1.2; color: var(--cor-texto); }
+.banco-opcao:has(input:checked) { border-color: var(--cor-principal); background: var(--cor-principal-clara); box-shadow: 0 0 0 1px var(--cor-principal) inset; }
+.banco-opcao:has(input:focus-visible) { outline: 2px solid var(--cor-principal); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .banco-opcao:active { transform: none; } }
 .cartao-credito-topo { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--espaco-2); margin-bottom: var(--espaco-2); }
 .cartao-credito .indicador-rotulo, .cartao-credito .indicador-valor, .cartao-credito .legenda { margin: 0; }
 .cartao-credito .progresso { margin: var(--espaco-2) 0 var(--espaco-1); }
@@ -354,7 +377,7 @@ a.lista-item:hover { background: var(--cor-fundo); }
 /* ---------- Acesso: login e cadastro ---------- */
 /* Fundo com brilho verde suave e fixo; o cartão é um material translúcido por cima (profundidade sem peso). */
 .acesso {
-  --acesso-sombra: 0 1px 2px rgba(31, 31, 29, 0.04), 0 8px 24px rgba(31, 31, 29, 0.06), 0 24px 48px rgba(15, 110, 86, 0.06);
+  --acesso-sombra: 0 1px 2px rgba(31, 31, 29, 0.03), 0 6px 20px rgba(31, 31, 29, 0.035);
   min-height: calc(100vh - 2 * var(--espaco-5));
   display: flex; flex-direction: column; justify-content: center; gap: var(--espaco-5);
   width: 100%; max-width: 400px; margin: 0 auto;
@@ -420,6 +443,7 @@ body:has(.acesso) {
 .acesso-esqueci { display: block; margin-left: auto; padding: var(--espaco-1) 0; font-size: 0.875rem; }
 .formulario .acesso-esqueci { margin-top: var(--espaco-2); }
 .acesso-rodape { margin: 0; text-align: center; color: var(--cor-texto-secundario); }
+.acesso-rodape .link-acao { color: var(--cor-texto); }
 .link-acao { color: var(--cor-principal); font-weight: 600; text-decoration: none; }
 .link-acao:hover { text-decoration: underline; }
 
@@ -451,6 +475,166 @@ body:has(.acesso) {
 @media (prefers-contrast: more) {
   .acesso-cartao { background: var(--cor-superficie); -webkit-backdrop-filter: none; backdrop-filter: none; border-color: var(--cor-texto-secundario); box-shadow: none; }
   .acesso .campo input:not([type="radio"]):not([type="checkbox"]) { border-color: var(--cor-texto-secundario); }
+}
+
+/* ---------- Acesso no PC: vitrine à esquerda, formulário à direita ---------- */
+.logo-icone { display: block; flex-shrink: 0; }
+.marca { display: inline-flex; align-items: center; gap: var(--espaco-2); }
+.acesso-cabecalho .logo-icone {
+  margin-bottom: var(--espaco-3); border-radius: 13px;
+  box-shadow: 0 1px 3px rgba(15, 110, 86, 0.08);
+}
+.acesso-seguranca { margin: 0; font-size: 0.8125rem; text-align: center; color: var(--cor-texto-secundario); }
+.acesso-painel { display: flex; flex-direction: column; gap: var(--espaco-4); }
+.acesso-painel .acesso { min-height: calc(100vh - 2 * var(--espaco-5) - 3rem); }
+
+.vitrine { display: none; }
+
+@media (min-width: 1024px) {
+  .conteudo--simples:has(.acesso-tela) { padding: 0; }
+  .acesso-tela { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: 100vh; }
+  .acesso-painel { justify-content: center; padding: var(--espaco-6) 40px; }
+  .acesso-painel .acesso { min-height: 0; margin: auto; }
+  /* O brilho do fundo fica só atrás do formulário; a vitrine tem o próprio fundo. */
+  body:has(.acesso-tela) { background: var(--cor-fundo); }
+  .acesso-painel {
+    background:
+      radial-gradient(40rem 24rem at 60% -10%, rgba(15, 110, 86, 0.12), transparent 60%),
+      var(--cor-fundo);
+  }
+
+  .vitrine {
+    --vitrine-verde: #5DCAA5;
+    --vitrine-duracao: 1.5s;
+    position: sticky; top: 0; height: 100vh; overflow: hidden;
+    display: flex; flex-direction: column; gap: var(--espaco-5);
+    padding: 56px 64px 48px;
+    color: #FFFFFF;
+    background:
+      radial-gradient(26rem 20rem at 50% 36%, rgba(29, 158, 117, 0.14), transparent 70%),
+      linear-gradient(160deg, #1A1C1B, #111312 70%);
+  }
+
+  /* Os slides ocupam a mesma célula; só o ativo fica visível. */
+  .vitrine-slides { flex: 1; min-height: 0; display: grid; }
+  /* Troca em carrossel: o próximo entra pela direita e o atual sai deslizando para a esquerda
+     (mesmo sentido nos dois, como páginas passando). Os que aguardam ficam à direita, invisíveis. */
+  .vitrine-slide {
+    grid-area: 1 / 1; min-height: 0; display: flex; flex-direction: column; gap: var(--espaco-5);
+    opacity: 0; visibility: hidden; transform: translateX(40px);
+    transition: opacity 220ms ease, transform 0s linear 300ms, visibility 0s linear 300ms;
+  }
+  .vitrine-slide[data-ativo] {
+    opacity: 1; visibility: visible; transform: none;
+    transition: opacity 260ms ease, transform 380ms var(--ease-out), visibility 0s;
+  }
+  .vitrine-slide[data-saindo] {
+    transform: translateX(-40px);
+    transition: opacity 220ms ease, transform 300ms var(--ease-out), visibility 0s linear 300ms;
+  }
+
+  .vitrine-palco { flex: 1; min-height: 0; display: grid; place-items: center; }
+
+  /* Cartão de exemplo: um material escuro translúcido que "chega" (sobe, ganha foco e nitidez). */
+  .vitrine-exemplo {
+    width: min(100%, 420px); padding: var(--espaco-5);
+    display: flex; flex-direction: column; gap: var(--espaco-3);
+    background: rgba(32, 34, 33, 0.82); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    font-size: 0.875rem; font-variant-numeric: tabular-nums;
+    transform: translateY(16px) scale(0.97); filter: blur(6px);
+    transition: transform 220ms var(--ease-out), filter 160ms ease;
+  }
+  .vitrine-slide[data-ativo] .vitrine-exemplo { transform: none; filter: none; transition-delay: 0s; }
+  .vitrine-exemplo h3 { margin: 0 0 var(--espaco-1); font-size: 1rem; font-weight: 600; }
+  .vitrine-exemplo small { display: block; font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); }
+  .vitrine-exemplo strong { font-weight: 600; }
+  .vitrine-bloco { display: flex; flex-direction: column; gap: 6px; }
+  .vitrine-linha { display: flex; align-items: center; justify-content: space-between; gap: var(--espaco-3); }
+  .vitrine-linha > span:first-child { color: rgba(255, 255, 255, 0.78); }
+  .vitrine-valor { margin: 0 0 var(--espaco-1); font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+  .vitrine-sucesso { color: var(--vitrine-verde); }
+  .vitrine-alerta { color: #F0B04A; }
+  .vitrine-perigo { color: #F28B82; }
+
+  .vitrine-pessoa { display: flex; align-items: center; gap: var(--espaco-3); }
+  .vitrine-pessoa strong { display: block; color: #FFFFFF; }
+  .vitrine-avatar {
+    display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+    background: var(--cor-terceiros); color: #FFFFFF; font-size: 0.75rem; font-weight: 600;
+  }
+  .vitrine-lado { display: flex; align-items: center; gap: var(--espaco-2); }
+  .vitrine-selo { padding: 2px var(--espaco-2); border-radius: 999px; font-size: 0.6875rem; font-weight: 600; }
+  .vitrine-selo--perigo { background: rgba(242, 139, 130, 0.16); color: #F28B82; }
+  .vitrine-selo--sucesso { background: rgba(93, 202, 165, 0.16); color: var(--vitrine-verde); }
+
+  /* As barras do exemplo enchem quando o slide entra. */
+  .vitrine-barra { display: block; height: 8px; border-radius: 4px; background: rgba(255, 255, 255, 0.12); overflow: hidden; }
+  .vitrine-barra > span {
+    display: block; height: 100%; border-radius: inherit; background: var(--vitrine-verde);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 300ms var(--ease-out);
+  }
+  .vitrine-slide[data-ativo] .vitrine-barra > span { transform: none; transition-delay: 60ms; }
+  .vitrine-barra--roxa > span { background: #8F87E8; }
+  .vitrine-barra--laranja > span { background: #EE8A62; }
+  .vitrine-barra--ambar > span { background: #F0B04A; }
+  .vitrine-barra--vermelha > span { background: #F28B82; }
+
+  /* Título em duas linhas (a segunda em verde) e descrição, que sobem em sequência. */
+  .vitrine-texto h2 {
+    margin: 0 0 var(--espaco-3); font-size: clamp(1.75rem, 2.6vw, 2.5rem); font-weight: 700;
+    line-height: 1.1; letter-spacing: -0.025em;
+  }
+  .vitrine-texto h2 span { color: var(--vitrine-verde); }
+  .vitrine-texto p { margin: 0; max-width: 34rem; min-height: 3em; font-size: 1.0625rem; line-height: 1.5; color: rgba(255, 255, 255, 0.78); }
+  .vitrine-texto > * { transform: translateY(12px); transition: transform 220ms var(--ease-out); }
+  .vitrine-slide[data-ativo] .vitrine-texto > * { transform: none; transition-delay: 0s; }
+  .vitrine-slide[data-ativo] .vitrine-texto > p { transition-delay: 40ms; }
+
+  /* Pontos: o ativo vira uma pílula que enche até a próxima troca. */
+  .vitrine-controles { display: flex; align-items: center; gap: var(--espaco-4); }
+  .vitrine-pontos { display: flex; align-items: center; gap: 6px; }
+  .vitrine-ponto { padding: 10px 0; background: none; border: 0; cursor: pointer; }
+  .vitrine-ponto-trilho {
+    display: block; width: 8px; height: 8px; border-radius: 4px; overflow: hidden;
+    background: rgba(255, 255, 255, 0.3);
+    transition: width 150ms var(--ease-out), background-color 120ms ease;
+  }
+  .vitrine-ponto:hover .vitrine-ponto-trilho { background: rgba(255, 255, 255, 0.5); }
+  .vitrine-ponto[aria-current] .vitrine-ponto-trilho { width: 40px; }
+  .vitrine-ponto [data-vitrine-progresso] {
+    display: block; height: 100%; border-radius: inherit; background: #FFFFFF;
+    transform: scaleX(0); transform-origin: left;
+  }
+  .vitrine-ponto[aria-current] [data-vitrine-progresso] { animation: vitrine-progresso var(--vitrine-duracao) linear forwards; }
+  /* Mouse em cima, foco do teclado ou botão de pausa: a contagem para onde estava. */
+  .vitrine:hover [data-vitrine-progresso],
+  .vitrine:focus-within [data-vitrine-progresso],
+  .vitrine[data-pausado] [data-vitrine-progresso] { animation-play-state: paused; }
+
+  .vitrine-pausa {
+    display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1); border: 0; color: rgba(255, 255, 255, 0.8); cursor: pointer;
+    transition: background-color 150ms ease-out, transform var(--duracao-pressao) var(--ease-out);
+  }
+  .vitrine-pausa:hover { background: rgba(255, 255, 255, 0.18); color: #FFFFFF; }
+  .vitrine-pausa:active { transform: scale(0.94); }
+  .vitrine :focus-visible { outline-color: #FFFFFF; }
+}
+
+@keyframes vitrine-progresso { to { transform: none; } }
+
+/* Reduzir movimento: nada desliza, cresce ou desfoca; a troca vira um esmaecimento simples.
+   A contagem do ponto continua (é ela que comanda a troca) e o botão de pausa segue disponível. */
+@media (prefers-reduced-motion: reduce) {
+  .vitrine-exemplo, .vitrine-texto > *, .vitrine-barra > span { transform: none; filter: none; transition: none; }
+  .vitrine-slide, .vitrine-slide[data-ativo], .vitrine-slide[data-saindo] { transform: none; }
+  .vitrine-ponto-trilho { transition: none; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .vitrine-exemplo { background: #202221; -webkit-backdrop-filter: none; backdrop-filter: none; }
 }
 
 /* ---------- Seletor de mês "‹ Novembro de 2026 ›" ---------- */

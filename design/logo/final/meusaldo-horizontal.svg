@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 256">
+  <title>MeuSaldo — assinatura horizontal</title>
+  <!-- Atenção: o nome usa texto vivo na fonte Inter (Bold). Para impressão, converter o texto em curvas. -->
+  <path d="M37 203 V53 H79 L116 109 V167 L79 111 V203 Z" fill="#0F6E56" stroke="#0F6E56" stroke-width="10" stroke-linejoin="round"/>
+  <path d="M219 203 V53 H177 L140 109 V167 L177 111 V203 Z" fill="#1D9E75" stroke="#1D9E75" stroke-width="10" stroke-linejoin="round"/>
+  <text x="272" y="178" font-family="Inter, system-ui, sans-serif" font-weight="700" font-size="150" letter-spacing="-4" fill="#1F1F1D">MeuSaldo</text>
+</svg>
