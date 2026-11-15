@@ -75,6 +75,12 @@ Usuário → View (evento) → Controller → Model (entidade.validar)
 | Criar ou entrar no grupo (UC02) | `#/grupo` | GrupoController, GrupoConfigView, GrupoService |
 | Nova despesa (UC05, UC08, UC09, UC10) | `#/despesas/nova` | DespesaController, DespesaFormView, DespesaService |
 | Categorias (UC07) | `#/categorias` | CategoriaController, CategoriasView, CategoriaRepository |
+| Nova receita (UC04) | `#/receitas/nova` | ReceitaController, ReceitaFormView, ReceitaRepository |
+| Cartões (UC06) | `#/cartoes` | CartaoController, CartoesView, CartaoRepository, DespesaRepository.listarDoPeriodo |
+| Terceiros (UC03) | `#/terceiros` | TerceiroController, TerceirosView, TerceiroRepository |
+| Registrar reembolso (UC11) | `#/terceiros/:id/reembolso` | TerceiroController, ReembolsoView, ReembolsoService |
+
+No PC (tela a partir de 1024px) o layout troca a navegação inferior pela barra lateral das telas "versão PC" do Figma ([LayoutView](src/views/layout/LayoutView.js)). Use `.pagina-cabecalho`, `.pagina-dupla` (conteúdo + painel) e `.grade-2` (campos lado a lado) nas telas novas.
 
 As demais rotas já existem e mostram "em construção", indicando os casos de uso de cada uma. Para implementar uma delas, copie o padrão de Categorias (CRUD simples) ou de Nova despesa (formulário com regras).
 

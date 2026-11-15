@@ -28,6 +28,15 @@
   --espaco-5: 24px;
   --espaco-6: 32px;
 
+  --cor-alerta-barra: #BA7517;
+  --cor-pessoa-1: #1D9E75;
+  --cor-pessoa-2: #534AB7;
+  --cor-terceiros: #D85A30;
+
   --altura-nav: 64px;
   --largura-maxima: 560px;
+
+  /* Versão PC (≥ 1024px), conforme as telas 1440 × 900 do Figma. */
+  --largura-lateral: 248px;
+  --largura-maxima-pc: 1120px;
 }

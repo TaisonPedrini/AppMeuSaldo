@@ -58,7 +58,7 @@ export class Router {
 
     const conteudo = rota.publica || rota.semGrupo
       ? this.layout.simples()
-      : this.layout.completo(caminho);
+      : this.layout.completo(caminho, Sessao.usuario);
     rota.acao(conteudo, params);
   }
 

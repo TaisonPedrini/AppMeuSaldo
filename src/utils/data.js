@@ -18,6 +18,22 @@ export function periodoDe(iso) {
   return iso.slice(0, 7);
 }
 
+const MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+
+/** "2026-09" → "setembro de 2026" */
+export function nomeDoMes(periodo) {
+  const [ano, mes] = periodo.split('-').map(Number);
+  return `${MESES[mes - 1]} de ${ano}`;
+}
+
+/**
+ * Primeiro e último dia possíveis do mês, para consultas por faixa de data ISO.
+ * "-31" funciona para qualquer mês porque a comparação é de texto.
+ */
+export function faixaDoMes(periodo) {
+  return [`${periodo}-01`, `${periodo}-31`];
+}
+
 export function dataISOValida(iso) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(iso ?? '')) return false;
   const [ano, mes, dia] = iso.split('-').map(Number);
