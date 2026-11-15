@@ -4,6 +4,7 @@ import { AuthController } from './controllers/AuthController.js';
 import { GrupoController } from './controllers/GrupoController.js';
 import { InicioController } from './controllers/InicioController.js';
 import { DespesaController } from './controllers/DespesaController.js';
+import { LancamentoController } from './controllers/LancamentoController.js';
 import { ReceitaController } from './controllers/ReceitaController.js';
 import { TerceiroController } from './controllers/TerceiroController.js';
 import { CartaoController } from './controllers/CartaoController.js';
@@ -20,7 +21,7 @@ export const rotas = [
 
   { caminho: '/', acao: (c) => new InicioController(c).index() },
   { caminho: '/grupo/gerenciar', acao: (c) => new GrupoController(c).gerenciar() },
-  { caminho: '/lancamentos', acao: (c) => new DespesaController(c).listar() },
+  { caminho: '/lancamentos', acao: (c) => new LancamentoController(c).index() },
   { caminho: '/despesas/nova', acao: (c) => new DespesaController(c).nova() },
   { caminho: '/receitas/nova', acao: (c) => new ReceitaController(c).nova() },
   { caminho: '/terceiros', acao: (c) => new TerceiroController(c).index() },
@@ -28,6 +29,7 @@ export const rotas = [
   { caminho: '/cartoes', acao: (c) => new CartaoController(c).index() },
   { caminho: '/categorias', acao: (c) => new CategoriaController(c).index() },
   { caminho: '/orcamentos', acao: (c) => new OrcamentoController(c).index() },
+  { caminho: '/alertas', acao: (c) => new OrcamentoController(c).alertas() },
   { caminho: '/metas', acao: (c) => new MetaController(c).index() },
   { caminho: '/projecao', acao: (c) => new ProjecaoController(c).index() },
   { caminho: '/relatorios', acao: (c) => new RelatorioController(c).index() },

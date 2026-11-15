@@ -25,6 +25,16 @@ export const Periodicidade = Object.freeze({
   ANUAL: 'ANUAL',
 });
 
+/** Seções que podem entrar no relatório em PDF (UC18). */
+export const SecoesRelatorio = Object.freeze({
+  RESUMO: 'RESUMO',
+  CATEGORIAS: 'CATEGORIAS',
+  PESSOAS: 'PESSOAS',
+  TERCEIROS: 'TERCEIROS',
+  ORCAMENTO: 'ORCAMENTO',
+  MOVIMENTACOES: 'MOVIMENTACOES',
+});
+
 export const Rotulos = Object.freeze({
   [Classificacao.PESSOAL]: 'Pessoal',
   [Classificacao.COMPARTILHADA]: 'Compartilhada',

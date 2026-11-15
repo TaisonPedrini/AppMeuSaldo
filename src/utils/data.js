@@ -18,6 +18,14 @@ export function periodoDe(iso) {
   return iso.slice(0, 7);
 }
 
+/** Milissegundos → "29/09/2026 14:32" (RNF003). */
+export function formatarDataHora(ms) {
+  if (ms == null) return '';
+  const d = new Date(ms);
+  const doisDigitos = (n) => String(n).padStart(2, '0');
+  return `${doisDigitos(d.getDate())}/${doisDigitos(d.getMonth() + 1)}/${d.getFullYear()} ${doisDigitos(d.getHours())}:${doisDigitos(d.getMinutes())}`;
+}
+
 const MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
 
 /** "2026-09" → "setembro de 2026" */

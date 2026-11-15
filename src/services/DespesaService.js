@@ -9,9 +9,18 @@ import { periodoDe } from '../utils/data.js';
 import { formatarMoeda } from '../utils/moeda.js';
 import { registrarLogEm } from './AuditoriaService.js';
 
-// UC05 passo 8: alerta quando o valor utilizado atinge o limite.
-// Para avisar antes (RF018, "se aproxima do limite"), reduza, por exemplo, para 0.8.
-export const PERCENTUAL_ALERTA = 1;
+// Alertas de orçamento: ao se aproximar do limite (RF018) e ao atingi-lo (UC05, passo 8).
+// Cada despesa gera no máximo um alerta: o do maior limiar que ela fez o consumo ultrapassar.
+export const LIMIARES_ALERTA = [0.8, 1];
+
+/** Mensagem do alerta quando o consumo passa de `antes` para `depois` (centavos); null se nenhum limiar foi cruzado. */
+export function mensagemDeAlerta(nomeCategoria, limite, antes, depois) {
+  const cruzados = LIMIARES_ALERTA.filter((limiar) => antes < limite * limiar && depois >= limite * limiar);
+  if (!cruzados.length) return null;
+  const percentual = Math.round((depois / limite) * 100);
+  const situacao = cruzados.at(-1) >= 1 ? 'atingiu o limite' : `chegou a ${percentual}% do limite`;
+  return `${nomeCategoria} ${situacao}: ${formatarMoeda(depois)} de ${formatarMoeda(limite)} neste mês.`;
+}
 
 export class DespesaService {
   constructor(grupoId) {
@@ -30,10 +39,13 @@ export class DespesaService {
     const grupoRef = doc(db, 'grupos', grupoId);
     const despesaRef = doc(collection(grupoRef, 'despesas'));
     const orcamentoRef = doc(grupoRef, 'orcamentos', Orcamento.idPara(despesa.categoriaId, periodoDe(despesa.data)));
+    const categoriaRef = doc(grupoRef, 'categorias', despesa.categoriaId);
 
     return protegido(() => runTransaction(db, async (tx) => {
       // Transações exigem todas as leituras antes das gravações.
-      const [orcamentoSnap, grupoSnap] = await Promise.all([tx.get(orcamentoRef), tx.get(grupoRef)]);
+      const [orcamentoSnap, grupoSnap, categoriaSnap] = await Promise.all([
+        tx.get(orcamentoRef), tx.get(grupoRef), tx.get(categoriaRef),
+      ]);
 
       tx.set(despesaRef, { ...despesa.toFirestore(), criadoEm: serverTimestamp() });
 
@@ -46,12 +58,12 @@ export class DespesaService {
 
       if (orcamentoSnap.exists()) {
         const orcamento = Orcamento.fromFirestore(orcamentoSnap.id, orcamentoSnap.data());
-        const gatilho = orcamento.limite * PERCENTUAL_ALERTA;
         const depois = orcamento.valorUtilizado + despesa.valor;
         tx.update(orcamentoRef, { valorUtilizado: increment(despesa.valor) });
 
-        if (orcamento.valorUtilizado < gatilho && depois >= gatilho) {
-          const mensagem = `O orçamento da categoria chegou a ${formatarMoeda(depois)} de ${formatarMoeda(orcamento.limite)} neste mês.`;
+        const nomeCategoria = categoriaSnap.exists() ? categoriaSnap.data().nome : 'A categoria';
+        const mensagem = mensagemDeAlerta(nomeCategoria, orcamento.limite, orcamento.valorUtilizado, depois);
+        if (mensagem) {
           for (const usuarioId of grupoSnap.data().membros) {
             const alerta = new Notificacao({ mensagem, usuarioId, orcamentoId: orcamento.id });
             tx.set(doc(collection(grupoRef, 'notificacoes')), { ...alerta.toFirestore(), data: serverTimestamp() });

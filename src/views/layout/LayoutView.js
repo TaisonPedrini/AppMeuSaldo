@@ -12,6 +12,7 @@ const ICONES = {
   relatorios: '<path d="M12 20V10M18 20V4M6 20v-4"/>',
   orcamento: '<path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/>',
   metas: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+  alertas: '<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
   projecao: '<path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/>',
   cartoes: '<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>',
   categorias: '<path d="M12 2H2v10l9.29 9.29a1 1 0 0 0 1.41 0l8.59-8.59a1 1 0 0 0 0-1.41z"/><circle cx="7" cy="7" r="1"/>',
@@ -39,6 +40,7 @@ const SECOES_LATERAIS = [
   { titulo: 'Planejamento', itens: [
     { caminho: '/orcamentos', rotulo: 'Orçamento', icone: 'orcamento' },
     { caminho: '/metas', rotulo: 'Metas', icone: 'metas' },
+    { caminho: '/alertas', rotulo: 'Alertas', icone: 'alertas' },
     { caminho: '/projecao', rotulo: 'Projeção', icone: 'projecao' },
   ] },
   { titulo: 'Cadastros', itens: [

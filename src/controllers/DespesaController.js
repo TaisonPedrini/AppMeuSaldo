@@ -86,8 +86,4 @@ export class DespesaController extends Controller {
       valor: valorInformado ? paraCentavos(valorInformado) : despesa.valor,
     })];
   }
-
-  listar() {
-    this.pendente('Lançamentos', ['UC17']);
-  }
 }

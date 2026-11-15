@@ -79,10 +79,25 @@ Usuário → View (evento) → Controller → Model (entidade.validar)
 | Cartões (UC06) | `#/cartoes` | CartaoController, CartoesView, CartaoRepository, DespesaRepository.listarDoPeriodo |
 | Terceiros (UC03) | `#/terceiros` | TerceiroController, TerceirosView, TerceiroRepository |
 | Registrar reembolso (UC11) | `#/terceiros/:id/reembolso` | TerceiroController, ReembolsoView, ReembolsoService |
+| Início (UC13, UC15) | `#/` | InicioController, InicioView |
+| Lançamentos (UC17) | `#/lancamentos` | LancamentoController, LancamentosView, LancamentoService |
+| Orçamento (UC12) | `#/orcamentos` | OrcamentoController, OrcamentoView, OrcamentoService |
+| Alertas (UC13) | `#/alertas` | OrcamentoController, AlertasView, NotificacaoRepository |
+| Metas (UC14) | `#/metas` | MetaController, MetasView, MetaRepository |
+| Projeção do mês (UC15) | `#/projecao` | ProjecaoController, ProjecaoView, ProjecaoService |
+| Relatórios e PDF (UC16, UC18) | `#/relatorios` | RelatorioController, RelatoriosView, RelatorioService, RelatorioPdfService |
+| Gerenciar grupo (UC02) | `#/grupo/gerenciar` | GrupoController, GrupoGerenciarView, GrupoService |
 
-No PC (tela a partir de 1024px) o layout troca a navegação inferior pela barra lateral das telas "versão PC" do Figma ([LayoutView](src/views/layout/LayoutView.js)). Use `.pagina-cabecalho`, `.pagina-dupla` (conteúdo + painel) e `.grade-2` (campos lado a lado) nas telas novas.
+No PC (tela a partir de 1024px) o layout troca a navegação inferior pela barra lateral das telas "versão PC" do Figma ([LayoutView](src/views/layout/LayoutView.js)). No celular, as telas que não cabem na navegação inferior ficam nos atalhos do Início. Use `.pagina-cabecalho`, `.pagina-dupla` (conteúdo + painel) e `.grade-2` (campos lado a lado) nas telas novas.
 
-As demais rotas já existem e mostram "em construção", indicando os casos de uso de cada uma. Para implementar uma delas, copie o padrão de Categorias (CRUD simples) ou de Nova despesa (formulário com regras).
+Regras de cálculo que valem para todas as telas:
+
+- **Alertas de orçamento** (RF018): gerados ao cadastrar a despesa, quando o consumo da categoria cruza 80% e 100% do limite (`LIMIARES_ALERTA` em [DespesaService](src/services/DespesaService.js)).
+- **Projeção** (RF019): receitas − despesas lançadas no mês − ocorrências futuras das despesas recorrentes ([ProjecaoService](src/services/ProjecaoService.js)). Não há cadastro de parcelas, então elas não entram.
+- **Lançamentos** (RF022, RNF004): o mês é lido inteiro e filtrado no navegador, para não precisar de um índice composto para cada combinação de filtros; a lista mostra 20 itens por página.
+- **PDF** (RF021): gerado no navegador com o jsPDF, baixado do cdnjs na primeira vez que o relatório é gerado.
+
+A leitura de cupom fiscal (UC09) ainda não consulta a nota: o [CupomFiscalService](src/services/CupomFiscalService.js) sempre avisa que está indisponível, e o formulário segue no preenchimento manual (RNF013).
 
 ### Convenções de dados
 

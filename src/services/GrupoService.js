@@ -1,10 +1,10 @@
 // Criação do grupo do casal e entrada por código de convite (RF002 / UC02).
 // Cada código tem um documento em convites/{codigo} → { grupoId }, lido por id,
 // para que quem ainda não é membro não precise consultar a coleção de grupos.
-import { db, collection, doc, runTransaction, serverTimestamp } from '../lib/firebase.js';
+import { db, collection, doc, getDoc, updateDoc, runTransaction, serverTimestamp } from '../lib/firebase.js';
 import { ErroRegraNegocio, ErroValidacao, protegido } from '../core/erros.js';
 import { GrupoFinanceiro, MAXIMO_INTEGRANTES } from '../models/GrupoFinanceiro.js';
-import { registrarLogEm } from './AuditoriaService.js';
+import { registrarLog, registrarLogEm } from './AuditoriaService.js';
 
 const ALFABETO_CONVITE = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // sem 0/O e 1/I, fáceis de confundir
 
@@ -14,6 +14,28 @@ function gerarCodigoConvite(tamanho = 6) {
 }
 
 export const GrupoService = {
+  /** Dados do grupo para a tela de gerenciamento (UC02). */
+  async buscar(grupoId) {
+    return protegido(async () => {
+      const snapshot = await getDoc(doc(db, 'grupos', grupoId));
+      if (!snapshot.exists()) throw new ErroRegraNegocio('Grupo não encontrado. Saia e entre de novo no app.');
+      return GrupoFinanceiro.fromFirestore(snapshot.id, snapshot.data());
+    }, 'Não foi possível carregar o grupo. Verifique sua conexão e tente novamente.');
+  },
+
+  /** Altera só o nome; as regras do Firestore não deixam mudar os integrantes por aqui. */
+  async renomear(grupo, nome) {
+    const alterado = new GrupoFinanceiro({ ...grupo, nome: nome?.trim() });
+    const erros = alterado.validar();
+    if (erros.length) throw new ErroValidacao(erros);
+
+    return protegido(async () => {
+      await updateDoc(doc(db, 'grupos', grupo.id), { nome: alterado.nome });
+      await registrarLog(grupo.id, 'ALTERAR', 'GrupoFinanceiro', grupo.id);
+      return alterado;
+    }, 'Não foi possível salvar o nome do grupo. Verifique sua conexão e tente novamente.');
+  },
+
   /** @returns {Promise<string>} id do grupo criado */
   async criar(nome, usuario) {
     const grupo = new GrupoFinanceiro({ nome: nome?.trim(), codigoConvite: gerarCodigoConvite(), membros: [usuario.id] });
