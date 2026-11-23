@@ -2,6 +2,7 @@ import { View } from '../../core/View.js';
 import { html } from '../../utils/html.js';
 import { centavosParaCampo } from '../../utils/moeda.js';
 import { campo, campoMoeda, selecao, rotulo, legendaObrigatorios } from '../components/campos.js';
+import { lerQrCode } from '../components/LeitorQrCode.js';
 import { Classificacao, FormaPagamento, Periodicidade, Rotulos } from '../../models/enums.js';
 
 const opcoesDe = (valores) => valores.map((valor) => ({ valor, texto: Rotulos[valor] }));
@@ -20,7 +21,10 @@ export class DespesaFormView extends View {
 
         <button type="button" class="botao botao--secundario botao--bloco" data-acao="ler-cupom">Ler cupom fiscal</button>
 
+        <div class="cupom-vinculado" data-secao="cupom" hidden></div>
+
         <form class="cartao formulario" data-form="despesa" novalidate>
+          <input type="hidden" name="cupomFiscalUrl" value="">
           ${campoMoeda({ nome: 'valor', texto: 'Valor', obrigatorio: true })}
           ${campo({ nome: 'data', texto: 'Data', tipo: 'date', valor: hoje, obrigatorio: true })}
           ${campo({ nome: 'descricao', texto: 'Descrição', obrigatorio: true })}
@@ -88,12 +92,38 @@ export class DespesaFormView extends View {
     this.$('[data-secao="recorrencia"]').hidden = !form.recorrente.checked;
   }
 
-  /** Preenche o formulário com dados vindos da leitura do cupom (valor em centavos). */
-  preencher({ valor, data, descricao }) {
+  /** Abre a câmera (ou a escolha de foto) e devolve o texto do QR Code, ou null se o usuário desistir. */
+  lerQrCode() {
+    return lerQrCode();
+  }
+
+  /** Preenche o formulário com dados vindos da leitura do cupom (valor em centavos) e vincula o cupom. */
+  preencher({ valor, data, descricao, cupomFiscalUrl, numero }) {
     const form = this.$('[data-form="despesa"]');
     if (valor != null) form.valor.value = centavosParaCampo(valor);
     if (data) form.data.value = data;
     if (descricao) form.descricao.value = descricao;
+    form.cupomFiscalUrl.value = cupomFiscalUrl ?? '';
+    this.mostrarCupomVinculado(numero, cupomFiscalUrl);
+    (valor == null ? form.valor : form.categoriaId).focus();
+  }
+
+  mostrarCupomVinculado(numero, url) {
+    const secao = this.$('[data-secao="cupom"]');
+    secao.hidden = false;
+    secao.innerHTML = String(html`
+      <span class="cupom-vinculado-textos">
+        <strong>Cupom fiscal nº ${numero} vinculado</strong>
+        ${url ? html`<a href="${url}" target="_blank" rel="noopener noreferrer">Ver nota na SEFAZ</a>` : ''}
+      </span>
+      <button type="button" class="botao-texto" data-acao="desvincular-cupom">Remover</button>`);
+  }
+
+  desvincularCupom() {
+    this.$('[data-form="despesa"]').cupomFiscalUrl.value = '';
+    const secao = this.$('[data-secao="cupom"]');
+    secao.hidden = true;
+    secao.innerHTML = '';
   }
 
   aoSalvar(handler) {
@@ -102,5 +132,6 @@ export class DespesaFormView extends View {
 
   aoLerCupom(handler) {
     this.on('click', '[data-acao="ler-cupom"]', handler);
+    this.on('click', '[data-acao="desvincular-cupom"]', () => this.desvincularCupom());
   }
 }

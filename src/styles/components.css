@@ -737,3 +737,40 @@ body:has(.acesso) {
 @media (min-width: 1024px) {
   .toasts { left: auto; right: var(--espaco-5); bottom: var(--espaco-5); width: 400px; margin: 0; }
 }
+
+/* ---------- Leitura de cupom fiscal (UC09) ---------- */
+.leitor-qr {
+  width: min(440px, calc(100vw - 2 * var(--espaco-4))); max-height: calc(100dvh - 2 * var(--espaco-4));
+  padding: var(--espaco-5); border: 0; border-radius: var(--raio-cartao);
+  background: var(--cor-superficie); color: var(--cor-texto);
+  box-shadow: 0 8px 32px rgba(31, 31, 29, 0.18);
+  transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out);
+}
+@starting-style { .leitor-qr[open] { opacity: 0; transform: translateY(8px) scale(0.98); } }
+.leitor-qr::backdrop { background: rgba(31, 31, 29, 0.5); }
+.leitor-qr h2 { margin: 0 0 var(--espaco-1); font-size: 1.125rem; }
+.leitor-qr-instrucao { margin: 0 0 var(--espaco-4); color: var(--cor-texto-secundario); font-size: 0.875rem; }
+.leitor-qr-visor { position: relative; aspect-ratio: 1; border-radius: var(--raio-campo); overflow: hidden; background: #1F1F1D; }
+.leitor-qr-visor video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.leitor-qr-mira {
+  position: absolute; inset: 18%; border: 3px solid #FFFFFF; border-radius: var(--raio-campo);
+  box-shadow: 0 0 0 999px rgba(0, 0, 0, 0.35);
+}
+.leitor-qr-status { margin: var(--espaco-3) 0; font-size: 0.875rem; color: var(--cor-texto-secundario); }
+.leitor-qr-status--erro { padding: var(--espaco-3); border-radius: var(--raio-campo); background: var(--cor-alerta-fundo); color: var(--cor-alerta); font-weight: 500; }
+.leitor-qr-acoes { display: flex; flex-direction: column; gap: var(--espaco-2); }
+.leitor-qr-cancelar { min-height: 44px; }
+@media (prefers-reduced-motion: reduce) {
+  .leitor-qr { transition: opacity 200ms ease; }
+  @starting-style { .leitor-qr[open] { transform: none; } }
+}
+
+.cupom-vinculado {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--espaco-3);
+  padding: var(--espaco-3) var(--espaco-4); border-radius: var(--raio-cartao);
+  background: var(--cor-principal-clara); color: var(--cor-principal); font-size: 0.875rem;
+}
+.cupom-vinculado-textos { display: flex; flex-direction: column; min-width: 0; }
+.cupom-vinculado-textos strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cupom-vinculado-textos a { color: inherit; }
+.cupom-vinculado .botao-texto { flex-shrink: 0; min-height: 44px; }

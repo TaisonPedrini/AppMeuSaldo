@@ -37,10 +37,24 @@ export class DespesaController extends Controller {
   /** Passo 2 (UC09): se a leitura falhar, avisa e segue com o preenchimento manual (RNF013). */
   async lerCupom(view) {
     try {
-      view.preencher(await CupomFiscalService.ler());
+      const textoQr = await view.lerQrCode();
+      if (!textoQr) return; // o usuário preferiu preencher manualmente
+      view.ocupado(true, '[data-acao="ler-cupom"]');
+      const cupom = await CupomFiscalService.interpretar(textoQr);
+      view.preencher(cupom);
+      Toast[cupom.completo ? 'sucesso' : 'aviso'](this.mensagemDoCupom(cupom));
     } catch (erro) {
       Toast.aviso(erro.mensagemUsuario ?? 'A leitura de cupom falhou. Preencha os dados manualmente.');
+    } finally {
+      view.ocupado(false, '[data-acao="ler-cupom"]');
     }
+  }
+
+  mensagemDoCupom({ valor, data, completo }) {
+    if (completo) return 'Cupom lido. Escolha a categoria e confira os dados antes de salvar.';
+    const faltando = [valor == null && 'o valor', data == null && 'a data'].filter(Boolean);
+    if (!faltando.length) return 'Cupom lido. Confira a descrição e escolha a categoria antes de salvar.';
+    return `Cupom lido, mas a consulta à SEFAZ não respondeu. Informe ${faltando.join(' e ')} da compra.`;
   }
 
   /** Passos 3 a 8: monta a despesa com os dados do formulário e grava pelo serviço. */
@@ -73,6 +87,7 @@ export class DespesaController extends Controller {
       periodicidade: recorrente ? dados.periodicidade || null : null,
       dataFim: recorrente ? dados.dataFim || null : null,
       abateIR: dados.abateIR === 'on',
+      cupomFiscalUrl: dados.cupomFiscalUrl || null,
       usuarioId: this.usuario.id, // RF005: quem realizou a movimentação
     });
   }

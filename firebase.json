@@ -18,8 +18,26 @@
       "design/**",
       ".firebase/**",
       "package.json",
-      "**/node_modules/**"
+      "**/node_modules/**",
+      "functions/**"
     ],
-    "rewrites": [{ "source": "**", "destination": "/index.html" }]
-  }
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        "*.test.js",
+        ".git",
+        "*.local"
+      ]
+    }
+  ]
 }

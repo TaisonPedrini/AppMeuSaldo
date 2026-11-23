@@ -14,3 +14,9 @@ export const USUARIO_DESENVOLVIMENTO = Object.freeze({
   email: 'teste@meusaldo.dev',
   grupoId: 'grupo-dev',
 });
+
+// Leitura de cupom fiscal (UC09). Na emissão normal da NFC-e, valor e data não vêm no QR Code:
+// ficam na página da SEFAZ, que o navegador não consegue ler direto (CORS). Este endereço é o da
+// Cloud Function `consultarCupom` (pasta functions/), que busca a página e devolve os dados em JSON.
+// Com null, o app usa só o que o QR Code traz e pede para o usuário completar o resto.
+export const CUPOM_CONSULTA_URL = null;

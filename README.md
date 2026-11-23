@@ -97,7 +97,30 @@ Regras de cálculo que valem para todas as telas:
 - **Lançamentos** (RF022, RNF004): o mês é lido inteiro e filtrado no navegador, para não precisar de um índice composto para cada combinação de filtros; a lista mostra 20 itens por página.
 - **PDF** (RF021): gerado no navegador com o jsPDF, baixado do cdnjs na primeira vez que o relatório é gerado.
 
-A leitura de cupom fiscal (UC09) ainda não consulta a nota: o [CupomFiscalService](src/services/CupomFiscalService.js) sempre avisa que está indisponível, e o formulário segue no preenchimento manual (RNF013).
+### Leitura de cupom fiscal (UC09)
+
+Na tela Nova despesa, "Ler cupom fiscal" abre a câmera traseira (ou aceita uma foto do cupom) e lê o QR Code da NFC-e.
+
+| Etapa | Arquivo |
+|---|---|
+| Janela da câmera e envio de foto | [LeitorQrCode.js](src/views/components/LeitorQrCode.js) |
+| Decodificação do QR Code (BarcodeDetector nativo ou jsQR por CDN) | [lib/qrcode.js](src/lib/qrcode.js) |
+| Interpretação: chave de acesso, UF, número, URL da SEFAZ; valor e data quando o QR traz | [utils/nfce.js](src/utils/nfce.js) |
+| Consulta à SEFAZ e montagem dos dados do formulário | [CupomFiscalService](src/services/CupomFiscalService.js) |
+| Busca da página da SEFAZ no servidor (contorna o CORS) | [functions/](functions/index.js) |
+
+Formatos aceitos: NFC-e versões 1, 2 e 3 (emissão normal e em contingência) e CF-e SAT de São Paulo. O endereço da nota fica gravado em `cupomFiscalUrl` da despesa.
+
+Na emissão normal da NFC-e, que é a mais comum, o QR Code traz só a chave; valor, data e emitente ficam na página da SEFAZ. Para buscá-los:
+
+1. Mude o projeto do Firebase para o plano **Blaze** (Cloud Functions exigem; o uso deste app cabe na cota gratuita).
+2. Instale e publique a função:
+   ```bash
+   cd functions && npm install && npm test && cd .. && firebase deploy --only functions
+   ```
+3. Copie o endereço exibido no deploy (`https://southamerica-east1-<projeto>.cloudfunctions.net/consultarCupom`) para `CUPOM_CONSULTA_URL` em [app.config.js](src/config/app.config.js).
+
+Sem a função (ou se a SEFAZ não responder), o app preenche o que o QR Code traz, vincula o cupom e pede para o usuário informar o que faltou (RNF013).
 
 ### Convenções de dados
 
