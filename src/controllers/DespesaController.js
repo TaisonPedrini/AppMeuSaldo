@@ -39,22 +39,18 @@ export class DespesaController extends Controller {
     try {
       const textoQr = await view.lerQrCode();
       if (!textoQr) return; // o usuário preferiu preencher manualmente
-      view.ocupado(true, '[data-acao="ler-cupom"]');
-      const cupom = await CupomFiscalService.interpretar(textoQr);
+      const cupom = CupomFiscalService.interpretar(textoQr);
       view.preencher(cupom);
-      Toast[cupom.completo ? 'sucesso' : 'aviso'](this.mensagemDoCupom(cupom));
+      Toast[cupom.valor != null ? 'sucesso' : 'aviso'](this.mensagemDoCupom(cupom));
     } catch (erro) {
       Toast.aviso(erro.mensagemUsuario ?? 'A leitura de cupom falhou. Preencha os dados manualmente.');
-    } finally {
-      view.ocupado(false, '[data-acao="ler-cupom"]');
     }
   }
 
-  mensagemDoCupom({ valor, data, completo }) {
-    if (completo) return 'Cupom lido. Escolha a categoria e confira os dados antes de salvar.';
+  mensagemDoCupom({ valor, data }) {
+    if (valor != null && data != null) return 'Cupom lido. Confira a descrição e escolha a categoria antes de salvar.';
     const faltando = [valor == null && 'o valor', data == null && 'a data'].filter(Boolean);
-    if (!faltando.length) return 'Cupom lido. Confira a descrição e escolha a categoria antes de salvar.';
-    return `Cupom lido, mas a consulta à SEFAZ não respondeu. Informe ${faltando.join(' e ')} da compra.`;
+    return `Cupom vinculado. Esse QR Code não traz ${faltando.join(' nem ')} da compra: informe no formulário.`;
   }
 
   /** Passos 3 a 8: monta a despesa com os dados do formulário e grava pelo serviço. */

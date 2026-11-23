@@ -106,21 +106,11 @@ Na tela Nova despesa, "Ler cupom fiscal" abre a câmera traseira (ou aceita uma 
 | Janela da câmera e envio de foto | [LeitorQrCode.js](src/views/components/LeitorQrCode.js) |
 | Decodificação do QR Code (BarcodeDetector nativo ou jsQR por CDN) | [lib/qrcode.js](src/lib/qrcode.js) |
 | Interpretação: chave de acesso, UF, número, URL da SEFAZ; valor e data quando o QR traz | [utils/nfce.js](src/utils/nfce.js) |
-| Consulta à SEFAZ e montagem dos dados do formulário | [CupomFiscalService](src/services/CupomFiscalService.js) |
-| Busca da página da SEFAZ no servidor (contorna o CORS) | [functions/](functions/index.js) |
+| Montagem dos dados do formulário | [CupomFiscalService](src/services/CupomFiscalService.js) |
 
-Formatos aceitos: NFC-e versões 1, 2 e 3 (emissão normal e em contingência) e CF-e SAT de São Paulo. O endereço da nota fica gravado em `cupomFiscalUrl` da despesa.
+Formatos aceitos: NFC-e versões 1, 2 e 3 (emissão normal e em contingência) e CF-e SAT de São Paulo. O endereço da nota fica gravado em `cupomFiscalUrl` da despesa, com o link "Ver nota na SEFAZ" no formulário.
 
-Na emissão normal da NFC-e, que é a mais comum, o QR Code traz só a chave; valor, data e emitente ficam na página da SEFAZ. Para buscá-los:
-
-1. Mude o projeto do Firebase para o plano **Blaze** (Cloud Functions exigem; o uso deste app cabe na cota gratuita).
-2. Instale e publique a função:
-   ```bash
-   cd functions && npm install && npm test && cd .. && firebase deploy --only functions
-   ```
-3. Copie o endereço exibido no deploy (`https://southamerica-east1-<projeto>.cloudfunctions.net/consultarCupom`) para `CUPOM_CONSULTA_URL` em [app.config.js](src/config/app.config.js).
-
-Sem a função (ou se a SEFAZ não responder), o app preenche o que o QR Code traz, vincula o cupom e pede para o usuário informar o que faltou (RNF013).
+A SEFAZ não é consultada (isso exigiria um servidor, porque o navegador não lê a página dela por causa do CORS). Na emissão normal da NFC-e, que é a mais comum, o QR Code traz só a chave da nota: o app vincula o cupom, sugere a descrição "Cupom fiscal nº …" e pede para o usuário informar valor e data. Na contingência, na versão 1 e no SAT, o valor e a data também vêm preenchidos (RNF013).
 
 ### Convenções de dados
 
